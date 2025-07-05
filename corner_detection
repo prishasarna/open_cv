@@ -1,0 +1,20 @@
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+
+img =cv2.imread('corners.jpg')
+#when using cornerHaris(), input image must be grayscale and float 32
+img_gray =cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+img_gray =np.float32(img_gray)
+
+#detect corners using cornerHaris() function
+img_cornerdetect =cv2.cornerHarris(img_gray,2,3,0.04)
+img_cornerdetect =cv2.dilate(img_cornerdetect,None)
+
+#whenver img corner detect is large, put a red pixcel to show the corners on the original image
+img[img_cornerdetect>0.01*img_cornerdetect.max()]=[0,0,255]
+
+cv2.imshow('Myimage',img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
